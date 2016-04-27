@@ -42,6 +42,11 @@
     "gulp-util": "^3.0.7",
     "gulp.spritesmith": "^6.2.1",
     "main-bower-files": "^2.11.1",
-    "minimist": "^1.2.0"
-  }
+    "minimist": "^1.2.0",
+    "vinyl-source-stream": "^1.1.0",
+    "browserify": "^13.0.0",
+    "debowerify": "^1.4.1",
+    "whitespace-dot": "0.0.2"
+  },
+  "dependencies": {}
 }
