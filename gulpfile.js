@@ -13,14 +13,17 @@ var imagemin = require('gulp-imagemin');
 var spritesmith = require('gulp.spritesmith');
 var htmlreplace = require('gulp-html-replace');
 var uglify = require('gulp-uglify');
-var mainBowerFiles = require('main-bower-files');
-var filter = require('gulp-filter');
+// var mainBowerFiles = require('main-bower-files');
+//var filter = require('gulp-filter');
 var browserify = require('browserify');
 var source = require('vinyl-source-stream');
+var eslint = require('gulp-eslint');
+var plato = require('gulp-plato');
+var gulpStylelint = require('gulp-stylelint');
 
 var argv = require('minimist')(process.argv.slice(2), {
   string: 'env',
-  default: {env: process.env.NODE_ENV || 'development'}
+  'default': { env: process.env.NODE_ENV || 'development' }
 });
 
 var conf = {
@@ -71,13 +74,13 @@ gulp.task('style-watch', function () {
       .pipe(autoprefixer(['last 2 version']))
       .pipe(remember())
       .pipe(concat('cdp.css'))
-      .pipe(gulp.dest(conf.build.css))
+      .pipe(gulp.dest(conf.build.css));
 });
 
 gulp.task('images', ['clean', 'bower', 'sprite'], function () {
   return gulp.src(conf.images)
       .pipe(gulpif(argv.env === 'production', imagemin()))
-      .pipe(gulp.dest(conf.build.images))
+      .pipe(gulp.dest(conf.build.images));
 });
 
 gulp.task('sprite', ['clean'], function () {
@@ -89,9 +92,9 @@ gulp.task('sprite', ['clean'], function () {
 gulp.task('html', ['clean'], function () {
   return gulp.src(conf.html)
       .pipe(htmlreplace({
-        'css': '../css/cdp.css',
-        'js': '../js/cdp.js',
-        'logo': {
+        css: '../css/cdp.css',
+        js: '../js/cdp.js',
+        logo: {
           src: '../images/logo_gray-blue_80px.svg',
           tpl: '<img src="%s" alt="Epam logo"/>'
         }
@@ -100,7 +103,7 @@ gulp.task('html', ['clean'], function () {
 });
 
 gulp.task('script', ['clean', 'bower'], function () {
-  return browserify('./src/js/main.js', {debug:true})
+  return browserify('./src/js/main.js', { debug:true })
       .transform('debowerify')
       .bundle()
       .pipe(source('cdp.js'))
@@ -108,11 +111,38 @@ gulp.task('script', ['clean', 'bower'], function () {
       .pipe(gulp.dest(conf.build.js));
 });
 
+gulp.task('lint', function () {
+  return gulp.src(['**/*.js', '!node_modules/**', '!build/**', '!report/**'])
+      .pipe(eslint())
+      .pipe(eslint.format())
+      .pipe(eslint.failAfterError());
+});
+
+gulp.task('plato', function () {
+  return gulp.src('src/**/*.js')
+      .pipe(plato('reports/plato', {
+        complexity: {
+          trycatch: true
+        }
+      }));
+});
+
+gulp.task('lint-css', function lintCssTask() {
+  return gulp.src([bootstrap.less, conf.less])
+      .pipe(gulpStylelint({
+        reporters: [
+          { formatter: 'string', console: true },
+          { formatter: 'verbose', save: 'reports/stylelint/report.txt' }
+        ],
+        syntax: 'less'
+      }));
+});
+
 gulp.task('clean', function () {
   return del([conf.build.folder, conf.build.tmpFolders]);
 });
 
-gulp.task('build', ['style', 'images', 'html', 'script']);
+gulp.task('build', ['lint-css', 'style', 'images', 'html', 'lint', 'script', 'plato']);
 
 gulp.task('watch', ['build'], function () {
   return gulp.watch(conf.less, ['style-watch']);
