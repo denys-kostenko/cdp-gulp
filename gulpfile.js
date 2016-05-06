@@ -32,6 +32,11 @@ var conf = {
   icons: 'src/images/icons/*.png',
   html: 'src/*.html',
   js: 'src/*.js ',
+  reports: {
+    folder: 'reports',
+    plato: 'reports/plato',
+    stylelint: 'reports/stylelint'
+  },
   sprite: {
     imgName: 'images/build/sprite.png',
     cssName: 'less/build/sprite.less',
@@ -112,7 +117,7 @@ gulp.task('script', ['clean', 'bower'], function () {
 });
 
 gulp.task('lint', function () {
-  return gulp.src(['**/*.js', '!node_modules/**', '!build/**', '!report/**'])
+  return gulp.src(['**/*.js', '!node_modules/**', '!bower_components/**', '!build/**', '!reports/**'])
       .pipe(eslint())
       .pipe(eslint.format())
       .pipe(eslint.failAfterError());
@@ -120,7 +125,7 @@ gulp.task('lint', function () {
 
 gulp.task('plato', function () {
   return gulp.src('src/**/*.js')
-      .pipe(plato('reports/plato', {
+      .pipe(plato(conf.reports.plato, {
         complexity: {
           trycatch: true
         }
@@ -128,18 +133,18 @@ gulp.task('plato', function () {
 });
 
 gulp.task('lint-css', function lintCssTask() {
-  return gulp.src([bootstrap.less, conf.less])
+  return gulp.src([conf.less])
       .pipe(gulpStylelint({
         reporters: [
           { formatter: 'string', console: true },
-          { formatter: 'verbose', save: 'reports/stylelint/report.txt' }
+          { formatter: 'verbose', save: conf.reports.stylelint + '/report.txt' }
         ],
         syntax: 'less'
       }));
 });
 
 gulp.task('clean', function () {
-  return del([conf.build.folder, conf.build.tmpFolders]);
+  return del([conf.build.folder, conf.build.tmpFolders, conf.reports.folder]);
 });
 
 gulp.task('build', ['lint-css', 'style', 'images', 'html', 'lint', 'script', 'plato']);
