@@ -6,6 +6,7 @@
     "build": "gulp build",
     "build:prod": "gulp build --env=production",
     "watch": "gulp watch",
+    "start": "http-server build -p ${PORT}",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -46,6 +47,7 @@
     "gulp-uglify": "^1.5.3",
     "gulp-util": "^3.0.7",
     "gulp.spritesmith": "^6.2.1",
+    "http-server": "^0.9.0",
     "main-bower-files": "^2.11.1",
     "minimist": "^1.2.0",
     "postcss-less": "^0.10.0",
