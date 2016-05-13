@@ -5,3 +5,7 @@ script: gulp build
 branches:
  only:
     - deploy
+deploy:
+  provider: heroku
+  api_key: "qd0+Fd7YD7jel1UqJcOAdqLs85ID/tRQ2wG+wCwKjbNksvJtDGRhlNnGovNU0GEKBKh264Em2rhTsvaFRdKNGthnFd+Z/sOp1t1JPobVBoHrIavBvHgUpjFwnzcimecGS5h2ssbM/+yU73+RH/eGnRQRmOPamW3Lbo0wixfAl8QH2xVCfNnaphAoCAdNk/o+S5c/e1MbhvRGRUwiOyuRObpjE/jMgOYnNsdlbo4GVBEvExKgR4lGAz1F55qfX80DtzeL0/oK7Z0iwVocfrTuF2GY4Il7tuTt/I/LCK1U3CkoNiMQ1BQsJUsCiNA6D1/Pp6XiFt8yP9QJHV/6HFW3nsRfFb/etSQbg7EX1jMlBs8q+7hOxy5PUVbNQlWPkultQPa6t2T9o21l/MBVyRuLNUlOTPLHmYPP54g/gfcw0dIixv2y86ynxX6iyB5Im/Fq/JAhEjnI3yR0EQrneL1Qpje7AECsoGpxNqticiUC0B//lYJk2rvHIXzX7yODs3Y9XnZ23DbdD82prngKXoMc5v2M7H59sFqtKL4K36ua4iDG3zfxckQtDx3hgeaMY7kwLXvDGSAd7jnaBvCBVkuCEVqe+uoUJo0U1t9mFNa5SARnJ0seO1W/b3S9Jy1pBV/CtfNu5PJ+6Xg8si4/F7vuLU6Q3xgKroGnZ7Us3AqOwtw="
+  on: deploy
