@@ -48,7 +48,7 @@ var conf = {
     css: 'build/css',
     images: 'build/images',
     js: 'build/js',
-    html: 'build/html'
+    html: 'build'
   }
 };
 
@@ -97,10 +97,10 @@ gulp.task('sprite', ['clean'], function () {
 gulp.task('html', ['clean'], function () {
   return gulp.src(conf.html)
       .pipe(htmlreplace({
-        css: '../css/cdp.css',
-        js: '../js/cdp.js',
+        css: 'css/cdp.css',
+        js: 'js/cdp.js',
         logo: {
-          src: '../images/logo_gray-blue_80px.svg',
+          src: 'images/logo_gray-blue_80px.svg',
           tpl: '<img src="%s" alt="Epam logo"/>'
         }
       }))
