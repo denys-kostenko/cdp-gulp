@@ -1,10 +1,11 @@
 language: node_js
 node_js:
   - "5"
-script: gulp build
 branches:
  only:
-    - deploy
+  - master
+  - deploy
+script: gulp build
 deploy:
   provider: heroku
   on: deploy
