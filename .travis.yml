@@ -7,6 +7,7 @@ branches:
   - deploy
 script: gulp build
 deploy:
+  skip_cleanup: true
   provider: heroku
   on: deploy
   api_key:
