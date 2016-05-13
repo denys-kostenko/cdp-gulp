@@ -1,5 +1,5 @@
 /**
- * Created by Denys_Kostenko on 4/27/2016.
+ * Created by Denys_Kostenko on 4/28/2016.
  */
 window.jQuery = require('jquery');
 require('bootstrap');
